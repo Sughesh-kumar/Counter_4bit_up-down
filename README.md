@@ -42,6 +42,7 @@ Functional Simulation:
       
 	After this you can see the window like below 
 
+![Uploading Screenshot 2025-04-29 145942.png…]()
 
 ## Fig 2: Invoke the Cadence Environment
 
