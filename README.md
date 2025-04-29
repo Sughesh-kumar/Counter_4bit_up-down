@@ -42,7 +42,7 @@ Functional Simulation:
       
 	After this you can see the window like below 
 
-![Uploading Screenshot 2025-04-29 145942.png…]()
+![Screenshot 2025-04-29 145942](https://github.com/user-attachments/assets/1cee3db4-4e52-44a0-b696-a481ea4ee0e1)
 
 ## Fig 2: Invoke the Cadence Environment
 
@@ -56,8 +56,92 @@ Functional Simulation:
 (Note : File name should be with HDL Extension)
 
 ### Verilog code for 4-Bit Up-Down Counter:
+```
+module up_down_counter (
+    input wire clk,        // Clock input
+    input wire reset,      // Asynchronous reset
+    input wire up_down,    // Control signal: 1 = count up, 0 = count down
+    output reg [3:0] count // 4-bit counter output
+);
 
-*/Program  for  4-Bit Up-Down Counter
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        count <= 4'b0000; // Reset the counter
+    end else begin
+        if (up_down) begin
+            count <= count + 1; // Count up
+        end else begin
+            count <= count - 1; // Count down
+        end
+    end
+end
+
+endmodule
+```
+
+```
+`timescale 1ns / 1ps
+
+module tb_up_down_counter;
+
+    // Testbench signals
+    reg clk;
+    reg reset;
+    reg up_down;
+    wire [3:0] count;
+
+    // Instantiate the counter
+    up_down_counter uut (
+        .clk(clk),
+        .reset(reset),
+        .up_down(up_down),
+        .count(count)
+    );
+
+    // Clock generation: 10ns period
+    always #5 clk = ~clk;
+
+    initial begin
+        // Initialize signals
+        clk = 0;
+        reset = 1;
+        up_down = 1; // Start with count up
+
+        // Hold reset for a short time
+        #10;
+        reset = 0;
+
+        // Count up for 10 clock cycles
+        #100;
+
+        // Change to count down
+        up_down = 0;
+
+        // Count down for 10 clock cycles
+        #100;
+
+        // Trigger reset
+        reset = 1;
+        #10;
+        reset = 0;
+
+        // Count up again
+        up_down = 1;
+        #50;
+
+        // Finish simulation
+        $finish;
+    end
+
+    // Monitor count value
+    initial begin
+        $monitor("Time = %0t | Reset = %b | Up_Down = %b | Count = %b", 
+                  $time, reset, up_down, count);
+    end
+
+endmodule
+
+```
 
 	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
 
@@ -76,11 +160,15 @@ Functional Simulation:
 
 It will invoke the nclaunch window for functional simulation we can compile,elaborate and simulate it using Multiple step
 
+![Screenshot 2025-04-29 145951](https://github.com/user-attachments/assets/0053eda3-8ddd-4f5c-a1d3-a2230602b6a5)
+
 ## Fig 3: Setting Multi-step simulation
 
 Select Multiple Step and then select “Create cds.lib File” as shown in below figure
 
 Click the cds.lib file and save the file by clicking on Save option
+
+![Screenshot 2025-04-29 150005](https://github.com/user-attachments/assets/46440d44-55aa-4a1e-9050-1046481e653c)
 
 ## Fig 4: cds.lib file Creation
 
@@ -89,6 +177,8 @@ Click the cds.lib file and save the file by clicking on Save option
 	Select “Don’t include any libraries (verilog design)” from “New cds.lib file” and click on “OK” as in below figure
 
 	We are simulating verilog design without using any libraries
+
+![Screenshot 2025-04-29 150015](https://github.com/user-attachments/assets/1d0dbe5b-d09a-413e-bf7f-a6e037aaf3ac)
 
 ## Fig 5: Selection of Don’t include any libraries
 
@@ -99,6 +189,8 @@ Click the cds.lib file and save the file by clicking on Save option
 	Left side you can see the HDL files. Right side of the window has worklib and snapshots directories listed.
 
 	Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation
+
+![Screenshot 2025-04-29 150035](https://github.com/user-attachments/assets/ef3e9d32-7694-4165-8097-768d7433d4b7)
 
 ## Fig 6: Nclaunch Window
 
@@ -123,6 +215,8 @@ i.e Cadence IES command for compile: ncverilog +access+rwc -compile fa.v
 Left side select the file and in Tools : launch verilog compiler with current selection will get enable. Click it to compile the code 
 
 Worklib is the directory where all the compiled codes are stored while Snapshot will have output of elaboration which in turn goes for simulation 
+
+![Screenshot 2025-04-29 150130](https://github.com/user-attachments/assets/c2fffdb6-4f4b-4a84-bbf4-974ee814aa4c)
 
 ## Fig 7: Compiled database in worklib
 
@@ -153,6 +247,8 @@ It contains statements that map logical library names to their physical director
     
 	After elaboration the file will come under snapshot. Select the test bench and simulate it. 
 
+![Screenshot 2025-04-29 150632](https://github.com/user-attachments/assets/f34e897b-a543-4d9b-bd4c-cae1b8e4d78b)
+
 ## Fig 8: Elaboration Launch Option
 
 ### Step 3: Simulation: – Simulate with the given test vectors over a period of time to observe the output behaviour. 
@@ -165,9 +261,15 @@ It contains statements that map logical library names to their physical director
 
 	Steps for simulation – Run the simulation command with simulator options
 
+![Screenshot 2025-04-29 150705 - Copy](https://github.com/user-attachments/assets/54640d9a-431b-4041-9e88-a7d5c212fc22)
+
 ## Fig 9: Design Browser window for simulation
 
+![Screenshot 2025-04-29 150722](https://github.com/user-attachments/assets/bd96a8a3-dd80-4080-8ee1-de20f968d9b2)
+
 ## Fig 10: Simulation Waveform Window
+
+![Screenshot 2025-04-29 150821](https://github.com/user-attachments/assets/73f88f6e-7ba6-4c9b-b645-83b682d0204d)
 
 ## Fig 11: Simulation Waveform Window
 
