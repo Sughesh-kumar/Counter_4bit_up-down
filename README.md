@@ -79,6 +79,14 @@ end
 endmodule
 ```
 
+	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
+
+## Creating Test bench:
+
+	Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.vhdl to open a new blank document (4bitup_down_count_tb.v).
+
+### Test-bench code for 4-Bit Up-Down Counter:
+
 ```
 `timescale 1ns / 1ps
 
@@ -142,16 +150,6 @@ module tb_up_down_counter;
 endmodule
 
 ```
-
-	Use Save option or Ctrl+S to save the code or click on the save option from the top most right corner and close the text file.
-
-## Creating Test bench:
-
-	Similarly, create your test bench using gedit <filename_tb>.v or <filename_tb>.vhdl to open a new blank document (4bitup_down_count_tb.v).
-
-### Test-bench code for 4-Bit Up-Down Counter:
-
-*/Test bench Program  for  4-Bit Up-Down Counter
 
 ### To Launch Simulation tool
 	linux:/> nclaunch -new&            // “-new” option is used for invoking NCVERILOG for the first time for any design
